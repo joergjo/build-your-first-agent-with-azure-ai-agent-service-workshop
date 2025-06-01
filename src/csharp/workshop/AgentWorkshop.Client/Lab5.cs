@@ -1,3 +1,4 @@
+using Azure.AI.Agents.Persistent;
 using Azure.AI.Projects;
 
 namespace AgentWorkshop.Client;
@@ -6,13 +7,13 @@ public class Lab5(AIProjectClient client, string modelName) : Lab(client, modelN
 {
     protected override string InstructionsFileName => "code_interpreter_multilingual.txt";
 
-    private AgentFile? fontFile;
+    private PersistentAgentFileInfo? fontFile;
 
-    protected override async Task InitialiseLabAsync(AgentsClient agentClient)
+    protected override async Task InitialiseLabAsync(PersistentAgentsClient agentClient)
     {
-        fontFile = await agentClient.UploadFileAsync(
+        fontFile = await agentClient.Files.UploadFileAsync(
             File.OpenRead(Path.Combine(SharedPath, "fonts", "fonts.zip")),
-            AgentFilePurpose.Agents,
+            PersistentAgentFilePurpose.Agents,
             "fonts.zip"
         );
     }

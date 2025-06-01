@@ -1,3 +1,4 @@
+using Azure.AI.Agents.Persistent;
 using Azure.AI.Projects;
 
 namespace AgentWorkshop.Client;
@@ -6,24 +7,24 @@ public class Lab2(AIProjectClient client, string modelName) : Lab(client, modelN
 {
     protected override string InstructionsFileName => "file_search.txt";
 
-    private VectorStore? vectorStore;
+    private PersistentAgentsVectorStore? vectorStore;
 
     public override IEnumerable<ToolDefinition> IntialiseLabTools() =>
         [new FileSearchToolDefinition()];
 
-    protected override async Task InitialiseLabAsync(AgentsClient agentClient)
+    protected override async Task InitialiseLabAsync(PersistentAgentsClient agentClient)
     {
         string datasheet = Path.Combine(SharedPath, "datasheet", "contoso-tents-datasheet.pdf");
         Utils.LogPurple($"Uploading file: {datasheet}");
 
-        AgentFile file = await agentClient.UploadFileAsync(
+        PersistentAgentFileInfo file = await agentClient.Files.UploadFileAsync(
             filePath: datasheet,
-            purpose: AgentFilePurpose.Agents
+            purpose: PersistentAgentFilePurpose.Agents
         );
 
         Utils.LogPurple($"File uploaded: {file.Id}");
 
-        vectorStore = await agentClient.CreateVectorStoreAsync(
+        vectorStore = await agentClient.VectorStores.CreateVectorStoreAsync(
             fileIds: [file.Id],
             name: "Contoso Product Information Vector Store"
         );
