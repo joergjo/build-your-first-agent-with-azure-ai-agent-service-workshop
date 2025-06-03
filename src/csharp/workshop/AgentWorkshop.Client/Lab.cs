@@ -8,7 +8,7 @@ namespace AgentWorkshop.Client;
 
 public abstract class Lab(AIProjectClient client, string modelName) : IAsyncDisposable
 {
-    protected static readonly string SharedPath = Path.Combine(Environment.CurrentDirectory, "..", "..", "..", "..", "..", "..", "shared");
+    protected static readonly string SharedPath = Path.Combine(AppContext.BaseDirectory, "..", "..", "..", "..", "..", "..", "shared");
     protected readonly SalesData SalesData = new(SharedPath);
     protected AIProjectClient Client { get; } = client;
     protected string ModelName { get; } = modelName;
