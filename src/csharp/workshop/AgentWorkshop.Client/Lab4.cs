@@ -19,7 +19,7 @@ public class Lab4 : Lab2
     public override IEnumerable<ToolDefinition> IntialiseLabTools()
     {
         var tools = new List<ToolDefinition>(base.IntialiseLabTools());
-        var connection = _client.GetConnectionsClient().Get(_bingConnectionName);
+        var connection = _client.Connections.Get(_bingConnectionName);
         var configuration = new BingGroundingSearchConfiguration(connection.Id);
         tools.Add(new BingGroundingToolDefinition(new BingGroundingSearchToolParameters([configuration])));
         
