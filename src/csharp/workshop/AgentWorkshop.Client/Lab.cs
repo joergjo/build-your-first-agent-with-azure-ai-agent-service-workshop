@@ -62,7 +62,7 @@ public abstract class Lab(AIProjectClient client, string modelName) : IAsyncDisp
 
         agent = await agentClient.Administration.CreateAgentAsync( 
             model: ModelName,
-            name: "Constoso Sales AI Agent",
+            name: "Contoso Sales AI Agent",
             instructions: instructions,
             tools: tools,
             temperature: temperature,
